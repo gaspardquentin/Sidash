@@ -6,6 +6,8 @@ window.addEventListener ('load', function(){
     let enemies = [];
     let gameOver = false;
     let score = 0;
+    let playerX = 0;
+    let playerY = 0;
     
     class InputHandler {
         constructor (){
@@ -17,7 +19,7 @@ window.addEventListener ('load', function(){
                 this.keys.push(e.key);
                 }
                 if (e.key === ' ') {
-                    console.log("taneuhsaetohut")
+                    shoot();
                 }
             });
             window.addEventListener('keyup', e => {
@@ -42,6 +44,7 @@ window.addEventListener ('load', function(){
         }
 
         draw (context){
+
             context.strokeStyle = 'white';
             context.strokeRect(this.x, this.y, this.width, this.height)
             context.beginPath();
@@ -69,6 +72,8 @@ window.addEventListener ('load', function(){
             this.y += this.vy;
             
             this.vy = 0;
+            playerX = this.x;
+            playerY = this.y;
         }
     }
     class Background {
@@ -102,6 +107,37 @@ window.addEventListener ('load', function(){
             this.image = document.getElementById("enemyImage");
             this.speed = 8;
             this.fps = 20;
+        }
+        draw(context){
+            context.strokeStyle = 'white';
+            context.strokeRect(this.x, this.y, this.width, this.height)
+            context.beginPath();
+            context.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
+            context.stroke();
+            context.drawImage(this.image, this.x, this.y, this.width, this.height);
+        }
+        update(deltaTime){
+            if (this.frameTimer > this.frameInterval){
+                if (this.frameX < this.maxFrame) this.frameX = 0;
+                else this.frameX++;
+                this.frameTimer = 0;
+            } else {
+                this.frameTimer += deltaTime;
+            }
+            this.x -= this.speed;
+        }
+    }
+
+    class Projectile {
+        constructor(gameWidth, gameHeight) {
+            this.gameWidth = gameWidth;
+            this.gameHeight = gameHeight;
+            this.width = 30;
+            this.height = 30;
+            this.x = playerX / 2;
+            this.y = playerY;
+            this.image = document.getElementById("projectile")
+            this.speed = 10;
         }
         draw(context){
             context.strokeStyle = 'white';
@@ -167,6 +203,12 @@ window.addEventListener ('load', function(){
         if (!gameOver) {
             requestAnimationFrame(animate) ;
         }
+    }
+
+    function shoot(){
+        let projectil = new Projectile(canvas.width, canvas.height);
+        projectil.update(100);
+        projectil.draw(ctx);
     }
     animate(0);
 });
