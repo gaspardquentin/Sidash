@@ -1,5 +1,5 @@
 window.addEventListener ('load', function(){
-    const canvas = document. getElementById('');
+    const canvas = document. getElementById('gameCanvas');
     const ctx = canvas.getContext ('2d') ;
     canvas.width = 800;
     canvas. height = 720;
@@ -34,11 +34,16 @@ window.addEventListener ('load', function(){
             this.width = 200;
             this.height = 200;
             this.x = 10;
-            this.y = 10;
+            this.y = this.gameHeight - this. height;
+            this.image = document.getElementById();
         }
         draw (context){
             context.fillStyle = 'white';
             context.fillRect(this.x, this.y, this.width, this .height);
+            context.drawImage(this.image, this.x, this.y, this.width, this.height);
+        }
+        update () {
+            this.x++;
         }
     }
     class Background {
@@ -50,9 +55,13 @@ window.addEventListener ('load', function(){
     function displayStatusText (){
     }
     const input = new InputHandler();
-    const player = new Player();
+    const player = new Player(canvas.width, canvas.height);
     player.draw(ctx);
 
     function animate(){
+        player.draw(ctx);
+        player .update();
+        requestAnimationFrame(animate) ;
     }
+    animate();
 });
