@@ -35,15 +35,18 @@ window.addEventListener ('load', function(){
             this.height = 200;
             this.x = 10;
             this.y = this.gameHeight - this. height;
-            this.image = document.getElementById();
+            this.image = document.getElementById("playerImage");
+            this.framex = 0;
+            this.frameY = 0;
+            this.speed = 10;
         }
         draw (context){
-            context.fillStyle = 'white';
-            context.fillRect(this.x, this.y, this.width, this .height);
+            //context.fillStyle = 'white';
+            context.fillRect(this.x, this.y, this.width, this.height);
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
         update () {
-            this.x++;
+            this.x += this.speed;
         }
     }
     class Background {
@@ -60,7 +63,7 @@ window.addEventListener ('load', function(){
 
     function animate(){
         player.draw(ctx);
-        player .update();
+        player.update();
         requestAnimationFrame(animate) ;
     }
     animate();
