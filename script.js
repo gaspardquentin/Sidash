@@ -1,8 +1,8 @@
 window.addEventListener ('load', function(){
     const canvas = document. getElementById('gameCanvas');
     const ctx = canvas.getContext ('2d') ;
-    canvas.width = 800;
-    canvas. height = 720;
+    canvas.width = window.innerWidth;
+    canvas. height = window.innerHeight;
     let enemies = [];
     
     class InputHandler {
@@ -154,7 +154,7 @@ window.addEventListener ('load', function(){
     const background = new Background(canvas.width, canvas.height);
 
     let lastTime = 0;
-    let enemyTimer = O;
+    let enemyTimer = 0;
     let enemyInterval = 2000;
     let randomEnemyInterval = Math.random() * 1000 + 500;
 
