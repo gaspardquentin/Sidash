@@ -34,53 +34,26 @@ window.addEventListener ('load', function(){
             this.gameHeight = gameHeight;
             this.width = 200;
             this.height = 200;
-            this.x = 10;
             this.y = this.gameHeight - this. height;
+            this.x = 10
             this.image = document.getElementById("playerImage");
-            this.frameX = 0;
-            this.frameY = 0;
-            this.speed = 10;
             this.vy = 0;
-            this.weigth = 0;
-            this.fps = 20;
-            this.frameTimer = 0;
-            this.frameInterval = 1000 / this.fps;
         }
+
         draw (context){
-            //context.fillStyle = 'white';
-            //context.fillRect(this.x, this.y, this.width, this.height);
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
+
         update (input) {
-            if (this.frameX >= this.maxFrame) this.frameX = 0;
-            else this.frameX++;
-            if (input.keys.indexOf('ArrowRight') > -1){
-                    this.speed = 5;
-            } else if (input.keys. indexOf('ArrowLeft') > -1) {
-                this.speed = -5;
-            } else if (input.keys.indexOf('ArrowUp') > -1 && this.onGround()) {
-                this.vy -= 32;
-            } else {
-                this.speed = 0;
+            if (input.keys.indexOf('ArrowUp') > -1 && this.y > 0) {
+                this.vy -= 10;
+            } else if(input.keys.indexOf('ArrowDown') > -1 && this.y < this.gameHeight - this.height) {
+                this.vy += 10
             }
-                // horizontal movement 
-                this.x += this.speed;
-                if (this.x < 0) this.x = 0;
-                else if (this.x > this.gameWidth - this.width) this.x = this.gameWidth - this.width
-                // vertical movement 
-                this.y += this.vy;
-                if (!this.onGround()){
-                    this.vy += this.weight;
-                    this.frameY = 1;
-                } else {
-                    this.vy = 0;
-                    this.frameY = 0;
-                }
-                if (this.y > this.gameHeight - this.height) this.y = this.gameHeight - this.height
+            // vertical movement 
+            this.y += this.vy;
             
-        }
-        onGround(){
-            return this.y >= (this.gameHeight - this.height);
+            this.vy = 0;
         }
     }
     class Background {
@@ -109,15 +82,12 @@ window.addEventListener ('load', function(){
             this.gameHeight = gameHeight;
             this.width = 160;
             this.height = 119;
-            this.x = this.gameWidth - this.width;
-            this.y = this.gameHeight - this.height;
+            this.x = this.gameWidth;
+            this.y = Math.floor(Math.random() * this.gameHeight)- 100
+            // this.y = this.gameHeight - this.height;
             this.image = document.getElementById("enemyImage");
             this.speed = 8;
-            this.maxFrame = 5;
             this.fps = 20;
-            this.frameX = 0;
-            this.frameTimer = 0;
-            this.frameInterval = 1000 / this.fps;
         }
         draw(context){
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
@@ -159,7 +129,7 @@ window.addEventListener ('load', function(){
     let randomEnemyInterval = Math.random() * 1000 + 500;
 
     function animate(timeStamp){
-        const deltaTime = timeStamp - lastTime;
+        const deltaTime = 1000;
         lastTime = timeStamp;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         background.draw(ctx);
