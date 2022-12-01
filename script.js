@@ -3,6 +3,7 @@ window.addEventListener ('load', function(){
     const ctx = canvas.getContext ('2d') ;
     canvas.width = 800;
     canvas. height = 720;
+    let enemies = [];
     
     class InputHandler {
         constructor (){
@@ -100,10 +101,36 @@ window.addEventListener ('load', function(){
     }
     class Enemy {
         constructor(gameWidth, gameHeight){
-            
+            this.gameWidth = gameWidth;
+            this.gameHeight = gameHeight;
+            this.width = 160;
+            this.height = 119;
+            this.x = this.gameWidth - this.width;
+            this.y = this.gameHeight - this.height;
+            this.image = document.getElementById("enemyImage");
+            this.speed = 5;
+            this.frameX = 0;
+        }
+        draw(context){
+            context.drawImage(this.image, this.x, this.y, this.width, this.height);
+        }
+        update(){
+            this.x--;
         }
     }
-    function handleEnemies (){
+    
+    
+    function handleEnemies (deltaTime){
+        if (enemyTimer > enemyInterval) {
+            enemies.push(new Enemy(canvas.width, canvas.height));
+            enemyTimer = 0;
+        } else {
+            enemyTimer += deltaTime;
+        }
+        enemies.forEach(enemy => {
+            enemy.draw(ctx);
+            enemy.update();
+        })
     }
     function displayStatusText (){
     }
@@ -111,13 +138,20 @@ window.addEventListener ('load', function(){
     const player = new Player(canvas.width, canvas.height);
     const background = new Background(canvas.width, canvas.height);
 
-    function animate(){
+    let lastTime = 0;
+    let enemyTimer = O;
+    let enemyInterval = 2000;
+
+    function animate(timeStamp){
+        const deltaTime = timeStamp - lastTime;
+        lastTime = timeStamp;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         background.draw(ctx);
         background.update();
         player.draw(ctx);
         player.update(input);
+        handleEnemies(deltaTime);
         requestAnimationFrame(animate) ;
     }
-    animate();
+    animate(0);
 });
