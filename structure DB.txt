@@ -1,0 +1,9 @@
+users
+    ID -> INTEGER - PRIMARY KEY - auto inc
+    psuedo -> VARCHAR(32)
+    
+games
+    ID -> INTEGER - PRIMARY KEY - auto inc
+    player -> INTEGER
+    score -> INTEGER
+    datum -> DATETIME
