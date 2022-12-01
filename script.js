@@ -11,10 +11,14 @@ window.addEventListener ('load', function(){
     canvas. height = window.innerHeight;
     let enemies = [];
     let projectiles = [];
+    let recharges = [];
+    let munitions = [new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10) ,new Image(10, 10), new Image(10, 10)];
     let gameOver = false;
     let score = 0;
     let playerX = 0;
     let playerY = 0;
+    let nbProjectiles = 10;
+    let deltaTime = 50;
     
     class InputHandler {
         constructor (){
@@ -26,7 +30,9 @@ window.addEventListener ('load', function(){
                 this.keys.push(e.key);
                 }
                 if (e.key === ' ') {
-                    shoot();
+                    if(nbProjectiles > 0) {
+                        shoot();
+                    }
                 }
             });
             window.addEventListener('keyup', e => {
@@ -45,7 +51,7 @@ window.addEventListener ('load', function(){
             this.width = 140;
             this.height = 30;
             this.y = this.gameHeight - 120;
-            this.x = 10
+            this.x = 10;
             this.image = document.getElementById("playerImage");
             this.vy = 0;
         }
@@ -139,6 +145,7 @@ window.addEventListener ('load', function(){
     }
 
     function handleEnemies (deltaTime){
+        // console.log(enemyTimer)
         if (enemyTimer > enemyInterval + randomEnemyInterval) {
             enemies.push(new Enemy(canvas.width, canvas.height));
             enemyTimer = 0;
@@ -148,6 +155,7 @@ window.addEventListener ('load', function(){
         enemies.forEach(enemy => {
             enemy.draw(ctx);
             enemy.update(enemies);
+            enemy.speed += 0.5;
         })
     }
 
@@ -182,6 +190,46 @@ window.addEventListener ('load', function(){
         })
     }
   
+    class Recharge {
+        constructor(gameWidth, gameHeight) {
+            this.gameWidth = gameWidth;
+            this.gameHeight = gameHeight;
+            this.width = 50;
+            this.height = 50
+            this.x = this.gameWidth;
+            this.y = Math.random() * (this.gameHeight - 200) + this.height / 2;
+            this.image = document.getElementById("recharge");
+            this.speed = 10;
+        }
+        draw(context){
+            context.strokeStyle = 'white';
+            context.strokeRect(this.x, this.y, this.width, this.height)
+            context.beginPath();
+            context.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
+            context.stroke();
+            context.drawImage(this.image, this.x, this.y, this.width, this.height);
+        }
+        update(){
+            this.x += this.speed;
+        }
+    }
+
+    let randomRechargeinterval = Math.random() * 10000 + 500;
+
+    function handleRecharge (deltaTime){
+        if (enemyTimer > enemyInterval + randomRechargeinterval) {
+            recharges.push(new Enemy(canvas.width, canvas.height));
+            enemyTimer = 0;
+        } else {
+            enemyTimer += deltaTime;
+        }
+        recharges.forEach(recharge => {
+            recharge.draw(ctx);
+            recharge.update(enemies);
+            recharge.speed += 0.5;
+        })
+    }
+
     function displayStatusText (context){
         context.font = '40px Helvetica';
         context.fillStyle = 'balck';
@@ -191,7 +239,18 @@ window.addEventListener ('load', function(){
             context.fillStyle = 'black';
             context.fillText('OUPS... Vous avez choppé le VIH !!!', canvas.width / 2, 200)
         }
+        drawMunitions(context)
     }
+
+    function drawMunitions (context){
+        let i = 0;
+        munitions.forEach(munition => {
+            munition.src = "imgs/capote.png"
+            context.drawImage(munition, 5 + i * 35, canvas.height - 60, 30, 30)
+            i++
+        })
+    }
+
     const input = new InputHandler();
     const player = new Player(canvas.width, canvas.height);
     const background = new Background(canvas.width, canvas.height);
@@ -201,7 +260,7 @@ window.addEventListener ('load', function(){
     let randomEnemyInterval = Math.random() * 1000 + 500;
 
     function animate(){
-        const deltaTime = 50;
+        // let deltaTime = 50;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         background.draw(ctx);
         background.update();
@@ -214,10 +273,13 @@ window.addEventListener ('load', function(){
         if (!gameOver) {
             requestAnimationFrame(animate) ;
         }
+        deltaTime += 0.01;
     }
 
     function shoot(){
         projectiles.push(new Projectile(canvas.width, canvas.height))
+        nbProjectiles -= 1;
+        munitions.pop();
     }
 
     animate();
