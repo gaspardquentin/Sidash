@@ -6,6 +6,6 @@
         <title>SIDASH</title>
     </head>
     <body>
-        salut
+        
     </body>
 </html>
