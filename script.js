@@ -4,27 +4,28 @@ window.addEventListener ('load', function(){
     canvas.width = window.innerWidth;
     canvas. height = window.innerHeight;
     let enemies = [];
+    let gameOver = false;
+    let score = 0;
     
     class InputHandler {
         constructor (){
             this.keys = [];
             window.addEventListener ('keydown' , e => {
                 if (( e.key === 'ArrowDown' ||
-                    e.key === 'ArrowUp' ||
-                    e.key === 'ArrowLeft' ||
-                    e.key === 'ArrowRight')
+                    e.key === 'ArrowUp')
                     && this.keys.indexOf(e.key) === -1){
                 this.keys.push(e.key);
                 }
+                if (e.key === ' ') {
+                    console.log("taneuhsaetohut")
+                }
             });
             window.addEventListener('keyup', e => {
-            if (
-                e.key === 'ArrowDown' ||
-                e.key === 'ArrowUp' ||
-                e.key === 'ArrowLeft' ||
-                e.key ==='ArrowRight'){
+            if (e.key === 'ArrowDown' ||
+                e.key === 'ArrowUp'){
             this.keys.splice(this.keys.indexOf(e.key), 1);
             }
+
         });
         }
     }
@@ -32,22 +33,36 @@ window.addEventListener ('load', function(){
         constructor (gameWidth, gameHeight){
             this.gameWidth = gameWidth;
             this.gameHeight = gameHeight;
-            this.width = 200;
-            this.height = 200;
-            this.y = this.gameHeight - this. height;
+            this.width = 140;
+            this.height = 30;
+            this.y = this.gameHeight - 120;
             this.x = 10
             this.image = document.getElementById("playerImage");
             this.vy = 0;
         }
 
         draw (context){
+            context.strokeStyle = 'white';
+            context.strokeRect(this.x, this.y, this.width, this.height)
+            context.beginPath();
+            context.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
+            context.stroke();
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
 
-        update (input) {
-            if (input.keys.indexOf('ArrowUp') > -1 && this.y > 0) {
+        update (input, enemies) {
+            // collision detection
+            enemies.forEach(enemy => {
+                const dx = enemy.x - this.x;
+                const dy = enemy.y - this.y;
+                const distance = Math.sqrt(dx * dx + dy * dy) * 2;
+                if ( distance < enemy.width/2 + this.width/2) {
+                    gameOver = true;
+                }
+            });
+            if (input.keys.indexOf('ArrowUp') > -1 && this.y > 120) {
                 this.vy -= 10;
-            } else if(input.keys.indexOf('ArrowDown') > -1 && this.y < this.gameHeight - this.height) {
+            } else if(input.keys.indexOf('ArrowDown') > -1 && this.y < this.gameHeight - 120) {
                 this.vy += 10
             }
             // vertical movement 
@@ -81,15 +96,19 @@ window.addEventListener ('load', function(){
             this.gameWidth = gameWidth;
             this.gameHeight = gameHeight;
             this.width = 160;
-            this.height = 119;
+            this.height = 120;
             this.x = this.gameWidth;
-            this.y = Math.floor(Math.random() * this.gameHeight)- 100
-            // this.y = this.gameHeight - this.height;
+            this.y = Math.random() * (this.gameHeight - 200) + this.height / 2;
             this.image = document.getElementById("enemyImage");
             this.speed = 8;
             this.fps = 20;
         }
         draw(context){
+            context.strokeStyle = 'white';
+            context.strokeRect(this.x, this.y, this.width, this.height)
+            context.beginPath();
+            context.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
+            context.stroke();
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
         update(deltaTime){
@@ -104,7 +123,6 @@ window.addEventListener ('load', function(){
         }
     }
     
-    
     function handleEnemies (deltaTime){
         if (enemyTimer > enemyInterval + randomEnemyInterval) {
             enemies.push(new Enemy(canvas.width, canvas.height));
@@ -117,7 +135,15 @@ window.addEventListener ('load', function(){
             enemy.update(deltaTime);
         })
     }
-    function displayStatusText (){
+    function displayStatusText (context){
+        context.font = '40px Helvetica';
+        context.fillStyle = 'balck';
+        context.fillText('Score: ', 20, 50)
+        if (gameOver) {
+            context.textAlign = 'center';
+            context.fillStyle = 'black';
+            context.fillText('GAME OVER, try again!', canvas.width / 2, 200)
+        }
     }
     const input = new InputHandler();
     const player = new Player(canvas.width, canvas.height);
@@ -129,15 +155,18 @@ window.addEventListener ('load', function(){
     let randomEnemyInterval = Math.random() * 1000 + 500;
 
     function animate(timeStamp){
-        const deltaTime = 1000;
+        const deltaTime = 50;
         lastTime = timeStamp;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         background.draw(ctx);
         background.update();
         player.draw(ctx);
-        player.update(input);
+        player.update(input, enemies);
         handleEnemies(deltaTime);
-        requestAnimationFrame(animate) ;
+        displayStatusText(ctx);
+        if (!gameOver) {
+            requestAnimationFrame(animate) ;
+        }
     }
     animate(0);
 });
