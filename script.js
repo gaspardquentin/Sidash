@@ -198,7 +198,7 @@ window.addEventListener ('load', function(){
                 piou.play()
                 delete enemies[enemies.indexOf(this)];
                 projectiles.shift();
-                score += 1;
+                score++;
                 }
             });
             this.x -= this.speed;
@@ -300,7 +300,7 @@ window.addEventListener ('load', function(){
     function displayStatusText (context){
         context.font = '40px Helvetica';
         context.fillStyle = 'balck';
-        context.fillText('Score: ' + score, 20, 50)
+        context.fillText('Score: ' + Math.round(score), 20, 50)
         if (gameOver) {
             context.textAlign = 'center';
             context.fillStyle = 'black';
@@ -386,7 +386,7 @@ window.addEventListener ('load', function(){
         document.getElementById("popup").classList.remove("pop");
         document.getElementById("popupText").style.zIndex = -1;
         document.getElementById("popupText").classList.remove("pop");
-        score += 1;
+        score += 0.0001;
         pauseGame = false;
         animate();
     }
