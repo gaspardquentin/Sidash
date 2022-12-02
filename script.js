@@ -19,7 +19,7 @@ window.addEventListener ('load', function(){
     let munitions = [new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10) ,new Image(10, 10), new Image(10, 10)];
     let gameOver = false;
     let pauseGame = false;
-    let score = 69;
+    let score = 0;
     let playerX = 0;
     let playerY = 0;
     let nbProjectiles = 10;
@@ -51,7 +51,10 @@ window.addEventListener ('load', function(){
                     && this.keys.indexOf(e.key) === -1){
                 this.keys.push(e.key);
                 }
-                if (e.key === 'Enter' && !gameOver && pauseGame) {
+                if ((e.key === 'Enter' ||
+                e.key === 'ArrowUp' ||
+                e.key === 'ArrowDown' ||
+                e.key === ' ') && !gameOver && pauseGame) {
                     removePopup()
                 }
                 if (e.key === ' ' && !pauseGame && nbProjectiles > 0) {
@@ -357,6 +360,7 @@ window.addEventListener ('load', function(){
         splash.src = "musique/splash.mp3"
         splash.volume = 1
         splash.play()
+        document.getElementById("popup").style.visibility= "visible";
         document.getElementById("popup").style.zIndex= 0;
         document.getElementById("popup").style.position = "absolute";
         document.getElementById("popup").classList.add("pop");
