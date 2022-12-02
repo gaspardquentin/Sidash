@@ -15,7 +15,7 @@ section{
     position: absolute; 
     top: 50%; left: 50%; 
     transform: translate(-50%, -50%); 
-    margin-top: 100px;
+    margin-top: 150px;
 }
 
 div{
@@ -126,4 +126,48 @@ img{
     background-color: black;
     width: 370px;
     height:120px;
+}
+
+.trophee{
+    color: white;
+    font-size: 200px;
+    font-family: arial,sans-serif;
+    background: black; 
+    height: 60px;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    border: 1px solid black; 
+    border-radius:5% 5% 5% 5%;
+    overflow: hidden; 
+    font-size: 1.3em;
+    font-weight: 700;
+    z-index: 0;
+    position: relative;
+    padding: 0;
+    
+    position: absolute; 
+    top: 35px; left: 15%; 
+    transform: translate( -30%);  
+   
+}
+
+.trophee::before {
+    content: '';
+    position: absolute;
+    top:60px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #a60eb4;
+    border-radius: 50% 50% 0 0;
+    transition: all .5s;
+    z-index: -1; 
+}
+
+.trophee:hover::before{
+    top: 0;
+    border-radius: 0%;
 }
