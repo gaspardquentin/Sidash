@@ -113,7 +113,7 @@ window.addEventListener ('load', function(){
                     document.getElementById("home").style.top = canvas.height / 2 - document.getElementById("home").offsetHeight / 2  - 50 + "px"
                     document.getElementById("home").classList.add("pop");
                     document.getElementById("home").onclick = function() {
-                    document.location.href = "index.html"
+                    document.location.href = "index.html?score=" + Math.round(score);
                     }
                 }
             });
