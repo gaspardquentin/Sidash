@@ -52,7 +52,7 @@ window.addEventListener ('load', function(){
             this.height = 30;
             this.y = this.gameHeight - 120;
             this.x = 10;
-            this.image = document.getElementById("playerImage");
+            this.image = document.getElementById("playerImage1");
             this.vy = 0;
         }
 
@@ -63,6 +63,7 @@ window.addEventListener ('load', function(){
             context.beginPath();
             context.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
             context.stroke();
+            this.image = playerImage();
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
 
@@ -74,6 +75,18 @@ window.addEventListener ('load', function(){
                 const distance = Math.sqrt(dx * dx + dy * dy) * 2;
                 if ( distance < enemy.width/2 + this.width/2) {
                     gameOver = true;
+                }
+            });
+            recharges.forEach(recharge => {
+            const dx = recharge.x - this.x;
+            const dy = recharge.y - this.y;
+            const distance = Math.sqrt(dx * dx + dy * dy) * 2;
+            if ( distance < projectile.width/2 + this.width/2) {
+                delete recharges[recharges.indexOf(recharge)];
+                for (let i = 0; i < 5; i++) {
+                    munitions.push(new Image(10, 10))
+                    nbProjectiles += 1;
+                }
                 }
             });
             if (input.keys.indexOf('ArrowUp') > -1 && this.y > 120) {
@@ -89,6 +102,20 @@ window.addEventListener ('load', function(){
             playerY = this.y;
         }
     }
+
+    let imageTimer = 0;
+    function playerImage() {
+        imageTimer += 50;
+        console.log(imageTimer)
+        if (imageTimer == 1000) {
+            imageTimer = 0;
+        }
+        if(imageTimer > 500) {
+            return document.getElementById("playerImage1");
+        }
+        return document.getElementById("playerImage2");
+    }
+
     class Background {
             constructor (gameWidth, gameHeight){
                 this.gameWidth = gameWidth;
@@ -129,7 +156,7 @@ window.addEventListener ('load', function(){
             context.stroke();
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
-        update(enemies){ 
+        update(enemies, recharges){ 
             projectiles.forEach(projectile => {
             const dx = projectile.x - this.x;
             const dy = projectile.y - this.y;
@@ -138,14 +165,13 @@ window.addEventListener ('load', function(){
                 delete enemies[enemies.indexOf(this)];
                 projectiles.shift();
                 score += 1;
-            }
-        });
+                }
+            });
             this.x -= this.speed;
         }
     }
 
     function handleEnemies (deltaTime){
-        // console.log(enemyTimer)
         if (enemyTimer > enemyInterval + randomEnemyInterval) {
             enemies.push(new Enemy(canvas.width, canvas.height));
             enemyTimer = 0;
@@ -153,18 +179,24 @@ window.addEventListener ('load', function(){
             enemyTimer += deltaTime;
         }
         enemies.forEach(enemy => {
+            if(Math.random() * 10 > 8) {
+                enemy.y += randomMove()
+            }
             enemy.draw(ctx);
             enemy.update(enemies);
             enemy.speed += 0.5;
         })
     }
 
+    function randomMove() {
+        return Math.random() * (50) - 25;
+    }
     class Projectile {
         constructor(gameWidth, gameHeight) {
             this.gameWidth = gameWidth;
             this.gameHeight = gameHeight;
-            this.width = 311;
-            this.height = 84;
+            this.width = 155;
+            this.height = 42;
             this.x = playerX / 2;
             this.y = playerY;
             this.image = document.getElementById("projectile")
@@ -194,9 +226,9 @@ window.addEventListener ('load', function(){
         constructor(gameWidth, gameHeight) {
             this.gameWidth = gameWidth;
             this.gameHeight = gameHeight;
-            this.width = 50;
-            this.height = 50
-            this.x = this.gameWidth;
+            this.width = 92;
+            this.height = 151;
+            this.x = gameWidth - 100;
             this.y = Math.random() * (this.gameHeight - 200) + this.height / 2;
             this.image = document.getElementById("recharge");
             this.speed = 10;
@@ -210,23 +242,24 @@ window.addEventListener ('load', function(){
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
         update(){
-            this.x += this.speed;
+            this.x -= this.speed;
         }
     }
 
-    let randomRechargeinterval = Math.random() * 10000 + 500;
+    let rechargeTimer = 0;
+    let rechargeInterval = 40000;
+    let randomRechargeinterval = Math.random() * 20000 + 500;
 
-    function handleRecharge (deltaTime){
-        if (enemyTimer > enemyInterval + randomRechargeinterval) {
-            recharges.push(new Enemy(canvas.width, canvas.height));
-            enemyTimer = 0;
+    function handleRecharge(deltaTime){
+        if (rechargeTimer > rechargeInterval + randomRechargeinterval) {
+            recharges.push(new Recharge(canvas.width, canvas.height));
+            rechargeTimer = 0;
         } else {
-            enemyTimer += deltaTime;
+            rechargeTimer += deltaTime;
         }
         recharges.forEach(recharge => {
             recharge.draw(ctx);
-            recharge.update(enemies);
-            recharge.speed += 0.5;
+            recharge.update();
         })
     }
 
@@ -265,11 +298,15 @@ window.addEventListener ('load', function(){
         background.draw(ctx);
         background.update();
         player.draw(ctx);
-        player.update(input, enemies);
+        player.update(input, enemies, recharges);
         handleEnemies(deltaTime);
+        handleRecharge(deltaTime)
         handleProjectiles();
         displayStatusText(ctx);
-
+        if (score % 3 == 0) {
+            showPopup()
+            gameOver = true;
+        }
         if (!gameOver) {
             requestAnimationFrame(animate) ;
         }
@@ -280,6 +317,10 @@ window.addEventListener ('load', function(){
         projectiles.push(new Projectile(canvas.width, canvas.height))
         nbProjectiles -= 1;
         munitions.pop();
+    }
+
+    function showPopup() {
+        document.getElementById("popup").style.zIndex = "2";
     }
 
     animate();
