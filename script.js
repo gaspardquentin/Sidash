@@ -389,7 +389,6 @@ window.addEventListener ('load', function(){
 
     function shomImages() {
         for(let i = 0; i < 12; i++) {
-            console.log(i)
             setTimeout(() => { initImage(i); }, i * 1000);
         }  
     }
