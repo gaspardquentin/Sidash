@@ -19,7 +19,7 @@ window.addEventListener ('load', function(){
     let munitions = [new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10) ,new Image(10, 10), new Image(10, 10)];
     let gameOver = false;
     let pauseGame = false;
-    let score = 0;
+    let score = 0       ;
     let playerX = 0;
     let playerY = 0;
     let nbProjectiles = 10;
@@ -106,6 +106,15 @@ window.addEventListener ('load', function(){
                 const distance = Math.sqrt(dx * dx + dy * dy) * 2;
                 if ( distance < enemy.width/2 + this.width/2) {
                     gameOver = true;
+                    document.getElementById("home").style.visibility= "visible";
+                    document.getElementById("home").style.zIndex= 0;
+                    document.getElementById("home").style.position = "absolute";
+                    document.getElementById("home").style.left = canvas.width / 2 - document.getElementById("home").offsetWidth / 2 + "px"
+                    document.getElementById("home").style.top = canvas.height / 2 - document.getElementById("home").offsetHeight / 2  - 50 + "px"
+                    document.getElementById("home").classList.add("pop");
+                    document.getElementById("home").onclick = function() {
+                    document.location.href = "index.html"
+                    }
                 }
             });
             recharges.forEach(recharge => {
