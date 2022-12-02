@@ -371,5 +371,46 @@ window.addEventListener ('load', function(){
         animate();
     }
 
+    function shomImages() {
+        document.getElementById("noam").position = "absolute"
+        document.getElementById("julie").position = "absolute"
+        document.getElementById("nathan").position = "absolute"
+        document.getElementById("noam")
+        document.getElementById("ismail")
+        document.getElementById("celian")
+        document.getElementById("gaspard")
+        document.getElementById("antoine")
+        document.getElementById("tom")
+        document.getElementById("raphael")
+        document.getElementById("tristan")
+        document.getElementById("axel")
+        
+        document.getElementById("noam")
+        document.getElementById("julie")
+        document.getElementById("nathan")
+        document.getElementById("noam")
+        document.getElementById("ismail")
+        document.getElementById("celian")
+        document.getElementById("gaspard")
+        document.getElementById("antoine")
+        document.getElementById("tom")
+        document.getElementById("raphael")
+        document.getElementById("tristan")
+        document.getElementById("axel")
+        
+        document.getElementById("noam")
+        document.getElementById("julie")
+        document.getElementById("nathan")
+        document.getElementById("noam")
+        document.getElementById("ismail")
+        document.getElementById("celian")
+        document.getElementById("gaspard")
+        document.getElementById("antoine")
+        document.getElementById("tom")
+        document.getElementById("raphael")
+        document.getElementById("tristan")
+        document.getElementById("axel")
+    }
+
     animate();
 });
