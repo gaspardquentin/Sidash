@@ -8,7 +8,8 @@ window.addEventListener ('load', function(){
     const canvas = document. getElementById('gameCanvas');
     const ctx = canvas.getContext ('2d') ;
     canvas.width = window.innerWidth;
-    canvas. height = window.innerHeight;
+    canvas.height = this.window.innerHeight;
+    // canvas.height = window.screen.height;
     let enemies = [];
     let projectiles = [];
     let recharges = [];
@@ -48,9 +49,7 @@ window.addEventListener ('load', function(){
                     && this.keys.indexOf(e.key) === -1){
                 this.keys.push(e.key);
                 }
-                console.log(e.key)
-                if (e.key === 'Enter' && !gameOver) {
-                    console.log("oh")
+                if (e.key === 'Enter' && !gameOver && pauseGame) {
                     removePopup()
                 }
                 if (e.key === ' ' && !pauseGame) {
@@ -82,11 +81,11 @@ window.addEventListener ('load', function(){
 
         draw (context){
 
-            context.strokeStyle = 'white';
-            context.strokeRect(this.x, this.y, this.width, this.height)
-            context.beginPath();
-            context.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
-            context.stroke();
+            // context.strokeStyle = 'white';
+            // context.strokeRect(this.x, this.y, this.width, this.height)
+            // context.beginPath();
+            // context.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
+            // context.stroke();
             this.image = playerImage();
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
@@ -130,7 +129,6 @@ window.addEventListener ('load', function(){
     let imageTimer = 0;
     function playerImage() {
         imageTimer += 50;
-        console.log(imageTimer)
         if (imageTimer == 1000) {
             imageTimer = 0;
         }
@@ -148,7 +146,7 @@ window.addEventListener ('load', function(){
                 this.x = 0;
                 this.y = 0;
                 this.width = 2400;
-                this.height = 720;
+                this.height = window.innerHeight;
                 this.speed = 7;
             }
             draw(context){
@@ -173,11 +171,11 @@ window.addEventListener ('load', function(){
             this.fps = 20;
         }
         draw(context){
-            context.strokeStyle = 'white';
-            context.strokeRect(this.x, this.y, this.width, this.height)
-            context.beginPath();
-            context.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
-            context.stroke();
+            // context.strokeStyle = 'white';
+            // context.strokeRect(this.x, this.y, this.width, this.height)
+            // context.beginPath();
+            // context.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
+            // context.stroke();
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
         update(enemies, recharges){ 
@@ -227,11 +225,11 @@ window.addEventListener ('load', function(){
             this.speed = 10;
         }
         draw(context){
-            context.strokeStyle = 'white';
-            context.strokeRect(this.x, this.y, this.width, this.height)
-            context.beginPath();
-            context.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
-            context.stroke();
+            // context.strokeStyle = 'white';
+            // context.strokeRect(this.x, this.y, this.width, this.height)
+            // context.beginPath();
+            // context.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
+            // context.stroke();
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
         update(){
@@ -258,11 +256,11 @@ window.addEventListener ('load', function(){
             this.speed = 10;
         }
         draw(context){
-            context.strokeStyle = 'white';
-            context.strokeRect(this.x, this.y, this.width, this.height)
-            context.beginPath();
-            context.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
-            context.stroke();
+            // context.strokeStyle = 'white';
+            // context.strokeRect(this.x, this.y, this.width, this.height)
+            // context.beginPath();
+            // context.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
+            // context.stroke();
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
         update(){
@@ -331,7 +329,10 @@ window.addEventListener ('load', function(){
             showPopup()
         }
         if (!gameOver && !pauseGame) {
-            requestAnimationFrame(animate) ;
+            requestAnimationFrame(animate);
+        } else if(score == 69){
+            
+            shomImages()
         }
         deltaTime += 0.01;
     }
@@ -365,52 +366,36 @@ window.addEventListener ('load', function(){
 
     function removePopup() {
         document.getElementById("popup").style.zIndex= -1;
+        document.getElementById("popup").classList.remove("pop");
         document.getElementById("popupText").style.zIndex = -1;
+        document.getElementById("popupText").classList.remove("pop");
         score += 1;
         pauseGame = false;
         animate();
     }
 
     function shomImages() {
-        document.getElementById("noam").position = "absolute"
-        document.getElementById("julie").position = "absolute"
-        document.getElementById("nathan").position = "absolute"
-        document.getElementById("noam")
-        document.getElementById("ismail")
-        document.getElementById("celian")
-        document.getElementById("gaspard")
-        document.getElementById("antoine")
-        document.getElementById("tom")
-        document.getElementById("raphael")
-        document.getElementById("tristan")
-        document.getElementById("axel")
-        
-        document.getElementById("noam")
-        document.getElementById("julie")
-        document.getElementById("nathan")
-        document.getElementById("noam")
-        document.getElementById("ismail")
-        document.getElementById("celian")
-        document.getElementById("gaspard")
-        document.getElementById("antoine")
-        document.getElementById("tom")
-        document.getElementById("raphael")
-        document.getElementById("tristan")
-        document.getElementById("axel")
-        
-        document.getElementById("noam")
-        document.getElementById("julie")
-        document.getElementById("nathan")
-        document.getElementById("noam")
-        document.getElementById("ismail")
-        document.getElementById("celian")
-        document.getElementById("gaspard")
-        document.getElementById("antoine")
-        document.getElementById("tom")
-        document.getElementById("raphael")
-        document.getElementById("tristan")
-        document.getElementById("axel")
+        setTimeout(() => { initImage(document.getElementById("noam"), 0); }, 0 * 1000);
+        setTimeout(() => { initImage(document.getElementById("julie"), 1); }, 1 * 1000);
+        setTimeout(() => { initImage(document.getElementById("nathan"), 2); }, 2 * 1000);
+        setTimeout(() => { initImage(document.getElementById("ismail"), 3); }, 3 * 1000);
+        setTimeout(() => { initImage(document.getElementById("celian"), 4); }, 4 * 1000);
+        setTimeout(() => { initImage(document.getElementById("gaspard"), 5); }, 5 * 1000);
+        setTimeout(() => { initImage(document.getElementById("antoine"), 6); }, 6 * 1000);
+        setTimeout(() => { initImage(document.getElementById("tom"), 7); }, 7 * 1000);
+        setTimeout(() => { initImage(document.getElementById("raphael"), 8); }, 8 * 1000);
+        setTimeout(() => { initImage(document.getElementById("tristan"), 9); }, 9 * 1000);
+        setTimeout(() => { initImage(document.getElementById("axel"), 10); }, 10 * 1000);   
     }
 
+    function initImage(image, i){
+        image.style.top = 0 + "px";
+        image.style.left = 0 + "px";
+        image.classList.add("pop")
+        image.style.zIndex = 1;
+        image.style.visibility = 'visible';
+        image.style.width = canvas.width + "px"
+        image.style.height = canvas.height + "px"
+    }
     animate();
 });
