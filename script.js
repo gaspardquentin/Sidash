@@ -375,8 +375,11 @@ window.addEventListener ('load', function(){
         document.getElementById("popupText").style.textAlign = "center";
         document.getElementById("popupText").style.fontSize = "2em";
         document.getElementById("popupText").style.fontFamily = "arial,sans-serif";
-
-        document.getElementById("popupText").innerText = textPopup[Math.floor(Math.random() * textPopup.length)]
+        if (score == 0) {
+            document.getElementById("popupText").innerText = "Utilisez les flèches directionnelles pour vous deplacer et éspace pour tirer."
+        } else {
+            document.getElementById("popupText").innerText = textPopup[Math.floor(Math.random() * textPopup.length)]
+        }
         document.getElementById("popupText").classList.add("pop");
         pauseGame = true;
     }
