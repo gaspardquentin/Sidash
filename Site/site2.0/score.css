@@ -1,0 +1,99 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.bg {
+    filter: blur(5px);
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    min-width: 100%;
+    min-height: 100%;
+    opacity: 0.6;
+} 
+
+.i{
+	position: absolute;
+	margin: 15px;
+	top: 0;
+	right: 0;
+}
+
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main{
+    height: 60vh;
+}
+
+.icon{
+    width: 180px;
+    height: 180px;
+    margin: 30px;
+    border-radius: 10px;
+    transition: all .4s;
+    cursor : pointer;
+}
+
+.icon:nth-child(1):hover {
+    box-shadow:0 0 0 30px #892cdc;
+}
+
+
+
+.glyphicon-glyphicon-play{
+    color: #892cdc;
+    filter: drop-shadow(0 0 10px #892cdc);
+}
+
+
+
+.bouton{
+    color: white;
+    font-size: 200px;
+    font-family: arial,sans-serif;
+    /* background: black; */
+    height: 60px;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    /* border: 1px solid black;  */
+    border-radius:5% 5% 5% 5%;
+    overflow: hidden; 
+    font-size: 1.3em;
+    font-weight: 700;
+    z-index: 0;
+    position: relative;
+    padding: 0;
+    
+    position: absolute; 
+    top: 35px; left: 100%; 
+    transform: translate( -100%); 
+    
+}
+
+.bouton::before {
+    content: '';
+    position: absolute;
+    top:60px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #a60eb4;
+    border-radius: 50% 50% 0 0;
+    transition: all .5s;
+    z-index: -1; 
+}
+
+.bouton:hover::before{
+    top: 0;
+    border-radius: 0%;
+}
+
