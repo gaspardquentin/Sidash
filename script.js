@@ -1,6 +1,6 @@
 var fond = document.createElement('audio');
 fond.src = "musique/sidash.mp3";
-fond.volume = 1;
+fond.volume = 0.4;
 fond.loop = true;
 fond.play();
 
@@ -10,6 +10,8 @@ window.addEventListener ('load', function(){
     canvas.width = window.innerWidth;
     canvas.height = this.window.innerHeight;
     // canvas.height = window.screen.height;
+    
+    
     let enemies = [];
     let projectiles = [];
     let recharges = [];
@@ -17,7 +19,7 @@ window.addEventListener ('load', function(){
     let munitions = [new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10) ,new Image(10, 10), new Image(10, 10)];
     let gameOver = false;
     let pauseGame = false;
-    let score = 0;
+    let score = 69;
     let playerX = 0;
     let playerY = 0;
     let nbProjectiles = 10;
@@ -52,10 +54,13 @@ window.addEventListener ('load', function(){
                 if (e.key === 'Enter' && !gameOver && pauseGame) {
                     removePopup()
                 }
-                if (e.key === ' ' && !pauseGame) {
-                    if(nbProjectiles > 0) {
-                        shoot();
-                    }
+                if (e.key === ' ' && !pauseGame && nbProjectiles > 0) {
+                    let piou = document.createElement('audio');
+                    piou.src = "musique/piou.mp3"
+                    piou.volume = 0.3
+                    piou.play()
+                    shoot();
+                    
                 }
             });
             window.addEventListener('keyup', e => {
@@ -184,6 +189,10 @@ window.addEventListener ('load', function(){
             const dy = projectile.y - this.y;
             const distance = Math.sqrt(dx * dx + dy * dy) * 2;
             if ( distance < projectile.width/2 + this.width/2) {
+                let piou = document.createElement('audio');
+                piou.src = "musique/mortVirus.mp3"
+                piou.volume = 0.3
+                piou.play()
                 delete enemies[enemies.indexOf(this)];
                 projectiles.shift();
                 score += 1;
@@ -344,6 +353,10 @@ window.addEventListener ('load', function(){
     }
 
     function showPopup() {
+        let splash = document.createElement('audio');
+        splash.src = "musique/splash.mp3"
+        splash.volume = 1
+        splash.play()
         document.getElementById("popup").style.zIndex= 0;
         document.getElementById("popup").style.position = "absolute";
         document.getElementById("popup").classList.add("pop");
@@ -375,20 +388,14 @@ window.addEventListener ('load', function(){
     }
 
     function shomImages() {
-        setTimeout(() => { initImage(document.getElementById("noam"), 0); }, 0 * 1000);
-        setTimeout(() => { initImage(document.getElementById("julie"), 1); }, 1 * 1000);
-        setTimeout(() => { initImage(document.getElementById("nathan"), 2); }, 2 * 1000);
-        setTimeout(() => { initImage(document.getElementById("ismail"), 3); }, 3 * 1000);
-        setTimeout(() => { initImage(document.getElementById("celian"), 4); }, 4 * 1000);
-        setTimeout(() => { initImage(document.getElementById("gaspard"), 5); }, 5 * 1000);
-        setTimeout(() => { initImage(document.getElementById("antoine"), 6); }, 6 * 1000);
-        setTimeout(() => { initImage(document.getElementById("tom"), 7); }, 7 * 1000);
-        setTimeout(() => { initImage(document.getElementById("raphael"), 8); }, 8 * 1000);
-        setTimeout(() => { initImage(document.getElementById("tristan"), 9); }, 9 * 1000);
-        setTimeout(() => { initImage(document.getElementById("axel"), 10); }, 10 * 1000);   
+        for(let i = 0; i < 12; i++) {
+            console.log(i)
+            setTimeout(() => { initImage(i); }, i * 1000);
+        }  
     }
 
-    function initImage(image, i){
+    function initImage(i){
+        var image = document.getElementById("p" + i)
         image.style.top = 0 + "px";
         image.style.left = 0 + "px";
         image.classList.add("pop")
