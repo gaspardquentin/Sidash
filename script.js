@@ -12,13 +12,32 @@ window.addEventListener ('load', function(){
     let enemies = [];
     let projectiles = [];
     let recharges = [];
+    let lePopup = [];
     let munitions = [new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10), new Image(10, 10) ,new Image(10, 10), new Image(10, 10)];
     let gameOver = false;
+    let pauseGame = false;
     let score = 0;
     let playerX = 0;
     let playerY = 0;
     let nbProjectiles = 10;
     let deltaTime = 50;
+    let textPopup = ["Le sida peut se transmettre au fœtus si la mère est porteuse du sida.", 
+    "Le sida peut être également transmis par le sang lors d'un échange de seringue ou d’une plaie infectée.", 
+    "Une personne séropositive peut prendre un traitement pour éviter de transmettre le sida.", 
+    "Les préservatifs masculins et féminins protègent presque totalement.", 
+    "Le sida touche 4000 personnes par jour, soit 3 personnes par minute.", 
+    "Il existe un comprimé préventif pour les personnes séronégatives.", 
+    "En 2021, 650 000 personnes sont décédés du VIH dans le monde.", 
+    "Protégez-vous à chaque rapport où conséquence !", 
+    "Si vous vous sentez potentiellement menacé par le VIH, dépistez-vous", 
+    "Le dépistage est très conseillé avant une relation sexuelle et après une prise de risque afin de détecter une potentielle infection sexuellement transmissible.", 
+    "Vous pouvez vous faire dépister anonymement.", 
+    "Pour savoir si on est séropositif, un autotest peut être réalisé", 
+    "Guérir du sida est impossible mais un traitement existe pour étendre son éspérence de vie.", 
+    "Les symptômes du sida sont le plus souvent la fièvre, les maux de têtes, les vomissements", 
+    "Les personnes les plus touchées par le VIH sont les hommes.", 
+    "? Le VIH signifie Le virus de l'immunodéficience humaine"
+    ]
     
     class InputHandler {
         constructor (){
@@ -29,7 +48,12 @@ window.addEventListener ('load', function(){
                     && this.keys.indexOf(e.key) === -1){
                 this.keys.push(e.key);
                 }
-                if (e.key === ' ') {
+                console.log(e.key)
+                if (e.key === 'Enter' && !gameOver) {
+                    console.log("oh")
+                    removePopup()
+                }
+                if (e.key === ' ' && !pauseGame) {
                     if(nbProjectiles > 0) {
                         shoot();
                     }
@@ -303,11 +327,10 @@ window.addEventListener ('load', function(){
         handleRecharge(deltaTime)
         handleProjectiles();
         displayStatusText(ctx);
-        if (score % 3 == 0) {
+        if ((score) % 10 == 0) {
             showPopup()
-            gameOver = true;
         }
-        if (!gameOver) {
+        if (!gameOver && !pauseGame) {
             requestAnimationFrame(animate) ;
         }
         deltaTime += 0.01;
@@ -320,7 +343,32 @@ window.addEventListener ('load', function(){
     }
 
     function showPopup() {
-        document.getElementById("popup").style.zIndex = "2";
+        document.getElementById("popup").style.zIndex= 0;
+        document.getElementById("popup").style.position = "absolute";
+        document.getElementById("popup").classList.add("pop");
+        document.getElementById("popup").style.width = canvas.width + "px"
+        document.getElementById("popup").style.height = canvas.height + "px"
+        
+        document.getElementById("popupText").style.position = "absolute";
+        document.getElementById("popupText").style.zIndex = 0;
+        document.getElementById("popupText").style.width = canvas.width / 2 + "px"
+        document.getElementById("popupText").style.left = canvas.width / 2 - document.getElementById("popupText").offsetWidth / 2 + "px"
+        document.getElementById("popupText").style.top = canvas.height / 2 - document.getElementById("popupText").offsetHeight / 2  - 50     + "px"
+        document.getElementById("popupText").style.textAlign = "center";
+        document.getElementById("popupText").style.fontSize = "2em";
+        document.getElementById("popupText").style.fontFamily = "arial,sans-serif";
+
+        document.getElementById("popupText").innerText = textPopup[Math.floor(Math.random() * textPopup.length)]
+        document.getElementById("popupText").classList.add("pop");
+        pauseGame = true;
+    }
+
+    function removePopup() {
+        document.getElementById("popup").style.zIndex= -1;
+        document.getElementById("popupText").style.zIndex = -1;
+        score += 1;
+        pauseGame = false;
+        animate();
     }
 
     animate();

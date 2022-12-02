@@ -5,3 +5,14 @@ html, body {
     overflow: hidden
 }
 
+@keyframes pop {
+    0%{
+        transform: scale(0.5);
+        opacity: 1;
+    }
+    100%{
+        z-index: 3;
+        transform: scale(1);
+        opacity: 1;
+    }
+}
