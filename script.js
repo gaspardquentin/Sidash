@@ -57,7 +57,7 @@ window.addEventListener ('load', function(){
                 e.key === ' ') && !gameOver && pauseGame) {
                     removePopup()
                 }
-                if (e.key === ' ' && !pauseGame && nbProjectiles > 0) {
+                if (e.key === ' ' && !pauseGame && !gameOver && nbProjectiles > 0) {
                     let piou = document.createElement('audio');
                     piou.src = "musique/piou.mp3"
                     piou.volume = 0.3
