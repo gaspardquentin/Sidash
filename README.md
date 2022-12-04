@@ -1,7 +1,7 @@
 # Sidash
 Jeu réalisé pour la nuit de l'info 2022 par l'équipe "Les ptits joueurs"
 
-# Jouer au jeu :
+## Jouer au jeu :
 https://les-petits-joueurs.nuit-info.ofni.asso.fr/annexe/score.php
 
 ![](imgs/baniere.png)
