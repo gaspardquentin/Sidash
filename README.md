@@ -1,22 +1,25 @@
 # Sidash
+
 Jeu réalisé pour la nuit de l'info 2022 par l'équipe "Les ptits joueurs"
 
-## Jouer au jeu :
+## Jouer au jeu:
+
 https://les-petits-joueurs.nuit-info.ofni.asso.fr/annexe/score.php
 
 ![](imgs/baniere.png)
 
-## Réalisé par :
+## Réalisé par:
+
 - Tom Deniau
 - Tristran Amiotte-Suchet
 - Ismail Esen
 - Antoine Cuinet
 - Raphael Tatin
-- Célian Breniaux 
+- Célian Breniaux
 - Noam Faivre
 - Julie Magnin
 - Nathan Gurgey
-- Gaspard Quentin 
+- Gaspard Quentin
 
 Tristan c'est un ptit joueur
 Attention, tu vas tomber dans un canivau merdeu

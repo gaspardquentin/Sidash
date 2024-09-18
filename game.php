@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SexInfo</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>SIDASH - game</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
     <canvas  id="gameCanvas" style="position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
     <img id="playerImage1" src="imgs/spermfinal1.png" hidden>
     <img id="playerImage2" src="imgs/spermfinal2.png" hidden>
-    <img id="backgroundImage" src="imgs/backgroundColor2.png" hidden>
+    <img id="backgroundImage" src="imgs/background.png" hidden>
     <img id="enemyImage" src="imgs/virusVIH.png" hidden>
     <img id="projectile" src="imgs/capote.png" hidden>
     <img id="recharge" src="imgs/boiteCapote.png" hidden>

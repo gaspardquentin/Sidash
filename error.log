@@ -1,0 +1,12 @@
+[15/06/2024 10:22:25]
+Erreur de requête
+Erreur mysqli : 1366
+Incorrect integer value: '' for column 'score' at row 1
+Requête :
+INSERT INTO games (player, score, datum)
+                VALUES ('5', '', '2024-06-15 10:22:25')
+Pile des appels de fonctions :
+#0 /Users/antoinecuinet/Documents/prog/Sidash copie/lib/library_general.php(141): mysqli_query(Object(mysqli), 'INSERT INTO gam...')
+#1 /Users/antoinecuinet/Documents/prog/Sidash copie/index.php(61): bdSendRequest(Object(mysqli), 'INSERT INTO gam...')
+#2 {main}
+

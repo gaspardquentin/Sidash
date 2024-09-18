@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital@1&family=Playfair+Display&family=Roboto+Slab:display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Roboto Slab', serif;
+}
+
+html {
+    width:  100vw;
+    height: 100vh;
+	max-height: 100vh;
+    overflow: hidden
+}
+
+/* Background image */
+.bg {
+    filter: blur(5px);
+    position: fixed;
+	z-index: -1;
+    top: 0; 
+    left: 0; 
+
+    /* Preserve aspet ratio */
+    min-width: 100%;
+    min-height: 100%;
+    opacity: 0.6;
+}
+
+
+/* Info */
+.info {
+	position: absolute;
+	margin: 15px;
+	top: 0;
+	right: 0;
+}
+
+.info a {
+	color: rgb(79, 17, 102, 0.7);
+}
+
+.info a i {
+	font-size: 36px;
+}
+
+
+/* Container */
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#container > img {
+	position: relative;
+	z-index: 1;
+}
+
+#slogan {
+    font-size: 3em;
+}
+
+form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+input[type=text] {
+	margin: 30px 30px 10px 30px;
+	padding: 10px;
+	width: 300px;
+	background-color: #f1f1f1;
+	border: 2px solid rgb(43, 43, 43);
+	border-radius: 5px;
+	color: rgb(43, 43, 43);
+	font-size: 15px;
+	font-weight: bold;
+	box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+}
+
+input[type=submit] {
+	position: relative;
+	margin-bottom: 30px;
+	padding: 5px 10px;
+	width: 300px;
+	background-color: rgb(79, 17, 102, 0.7);
+	box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+	border: 2px solid rgb(43, 43, 43);
+	border-radius: 5px;
+	color: #FFF;
+	font-size: 3em;
+	font-weight: bolder;
+	line-height: 50px;
+	text-align: center;
+    cursor: pointer;
+
+	transition: all 0.5s;
+}
+
+input[type=submit]:hover {
+	transition: all 0.3s;
+	background-color: rgba(79, 17, 102, 0.8);
+	transform: scale(1.1);
+}
+
+
+/* Table */
+table {
+	margin: 30px auto;
+	border-collapse: collapse;
+    border-spacing: 0;
+	width: 80%;
+    font-size: 14px;
+}
+
+table th {
+	padding: 5px 10px;
+	border: solid 2px #000;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+table td {
+    padding: 5px 10px;
+    border: solid 1px #000;
+    text-align: center;
+}
